@@ -102,7 +102,7 @@ public class CaptureThePortal extends JavaPlugin {
                 if(metricsSetup.setup())
                     log("Succesfully started Metrics, see http://mcstats.org for more information.", Level.INFO);
                 else
-                    log("Could not start Metrics, see http://mcstats.org for more information.", Level.INFO);
+                    log("Could not start Metrics, see http://mcstats.org for more information.", Level.WARNING);
             }
 
             Storage = new CapturesStorage(new File(this.getDataFolder(),"capturedpoints.yml"), CaptureThePortalConfig.getPersistCapture());
@@ -123,14 +123,15 @@ public class CaptureThePortal extends JavaPlugin {
             return false;
         if((sender instanceof Player) && !((Player)sender).isOp()) {
             ((Player)sender).sendMessage(ChatColor.RED + "You are not allowed to use that command. OP only.");
+            ((Player)sender).sendMessage(ChatColor.RED + "If something seems wrong, please contact a server admin!");
             return true;
         }
         if(args[0].equals("reload")) {
             Bukkit.getServer().getPluginManager().disablePlugin(this);
             Bukkit.getServer().getPluginManager().enablePlugin(this);
-            log("Reloaded", Level.INFO);
+            log("Reloaded Successfully", Level.INFO);
             if((sender instanceof Player))
-                Util.sendMessagePlayer(getMessage("Reloaded"), ((Player)sender));
+                Util.sendMessagePlayer(getMessage("Reloaded Successfully"), ((Player)sender));
         } else if(args[0].equals("info")) {
             PluginDescriptionFile pdfFile = this.getDescription();
             String message = "\nVersion: " + pdfFile.getVersion() +
